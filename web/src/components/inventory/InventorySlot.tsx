@@ -21,10 +21,11 @@ interface SlotProps {
   inventoryType: Inventory['type'];
   inventoryGroups: Inventory['groups'];
   item: Slot;
+  totalSlots?: number;
 }
 
 const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> = (
-  { item, inventoryId, inventoryType, inventoryGroups },
+  { item, inventoryId, inventoryType, inventoryGroups, totalSlots },
   ref
 ) => {
   const manager = useDragDropManager();
@@ -153,10 +154,10 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
         >
           <div
             className={
-              inventoryType === 'player' && item.slot <= 5 ? 'item-hotslot-header-wrapper' : 'item-slot-header-wrapper'
+              inventoryType === 'player' && (item.slot <= 5 || (totalSlots && item.slot === totalSlots)) ? 'item-hotslot-header-wrapper' : 'item-slot-header-wrapper'
             }
           >
-            {inventoryType === 'player' && item.slot <= 5 && <div className="inventory-slot-number">{item.slot}</div>}
+            {inventoryType === 'player' && (item.slot <= 5 || (totalSlots && item.slot === totalSlots)) && (<div className="inventory-slot-number">{item.slot <= 5 ? item.slot: 6}</div>)}
             <div className="item-slot-info-wrapper">
               <p>
                 {item.weight > 0

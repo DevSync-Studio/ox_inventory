@@ -871,6 +871,16 @@ local function registerCommands()
 		})
 	end
 
+	lib.addKeybind({
+		name = 'hotkey6',
+		description = locale('use_hotbar', 6),
+		defaultKey = '6',
+		onPressed = function()
+			if invOpen or EnableWeaponWheel or not invHotkeys or IsNuiFocused() then return end
+			useSlot(shared.playerslots)  -- Use the last slot of the inv
+		end
+	})
+
 	registerCommands = nil
 end
 
